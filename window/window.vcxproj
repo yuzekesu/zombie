@@ -137,12 +137,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="app.cpp" />
+    <ClCompile Include="keyboard.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="response.cpp" />
     <ClCompile Include="window.cpp" />
     <ClCompile Include="window_procedure.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app.h" />
+    <ClInclude Include="constant.h" />
+    <ClInclude Include="keyboard.h" />
+    <ClInclude Include="response.h" />
     <ClInclude Include="window.h" />
     <ClInclude Include="window_procedure.h" />
   </ItemGroup>
