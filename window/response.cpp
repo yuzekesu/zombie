@@ -22,6 +22,6 @@ void Response::forget(UCHAR vKey) {
 
 void Response::reset() {
 	for (int i = 0; i < MAX_VIRTUAL_KEY; i++) {
-		responses[i] = nullptr;
+		forget(i);
 	}
 }
