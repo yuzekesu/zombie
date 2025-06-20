@@ -1,6 +1,7 @@
 #include "window.h"
 #include "window_procedure.h"
 #include <cassert>
+#include <ratio>
 
 Window::Window()
 {
@@ -27,18 +28,21 @@ Window::Window()
 	int x = GetSystemMetrics(SM_CXSCREEN);
 	int y = GetSystemMetrics(SM_CYSCREEN);
 
-	// set this to "1" for borderless window that covers the whole monitor. 
-
-	LONG resizeFactor_window = 8;
-	RECT position_window{};
-	position_window.left = 0 + x / resizeFactor_window;
-	position_window.top = 0 + y / resizeFactor_window;
-	position_window.right = x - x / resizeFactor_window;
-	position_window.bottom = y - y / resizeFactor_window;
-	int width = position_window.right - position_window.left;
-	int height = position_window.bottom - position_window.top;
-	assert(AdjustWindowRect(&position_window, NULL, NULL));
-	assert(this->hWnd = CreateWindowExW(WS_EX_LAYERED, wc.lpszClassName, wc.lpszClassName, WS_POPUP, position_window.left, position_window.top, width, height, NULL, NULL, wc.hInstance, NULL));
+	/* 
+	the ratios represent the edge of the window on the primary monitor.
+	set "8" -> "1" for borderless full screen. 
+	*/
+	using factor_left_top = std::ratio<1, 8>;
+	using factor_right_bottom = std::ratio_subtract<std::ratio<1>, factor_left_top>;
+	RECT position_edge_window{};
+	position_edge_window.left = x * factor_left_top::num / factor_left_top::den;
+	position_edge_window.top = y * factor_left_top::num / factor_left_top::den;
+	position_edge_window.right = x * factor_right_bottom::num / factor_right_bottom::den;
+	position_edge_window.bottom = y * factor_right_bottom::num / factor_right_bottom::den;
+	int width_window = position_edge_window.right - position_edge_window.left;
+	int height_window = position_edge_window.bottom - position_edge_window.top;
+	assert(AdjustWindowRect(&position_edge_window, NULL, NULL));
+	assert(this->hWnd = CreateWindowExW(WS_EX_LAYERED, wc.lpszClassName, wc.lpszClassName, WS_POPUP, position_edge_window.left, position_edge_window.top, width_window, height_window, NULL, NULL, wc.hInstance, NULL));
 
 	// the transparence color is "magenta". 
 
