@@ -21,5 +21,8 @@ bool Keyboard::is_released(const UCHAR vKey)
 }
 
 void Keyboard::reset() {
+	
+	// the reset function is handled by the "std::bitset" class. 
+
 	this->state.reset();
 }

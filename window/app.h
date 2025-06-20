@@ -13,16 +13,25 @@ public:
 	App() : response(*this) {};	
 public:
 	// "seek message" loop. 
-	void run();					
-private: 
-	// window creation
-	Window window;	
+	void run();	
+private:
+
+	// win32 library datas
+
 	// storing windows messages from the queue. 
-	MSG msg{};		
+	MSG msg{};
+	// position of the cursor, update once per frame. 
+	POINT cursor{};
+private: 
+
+	// user defined datas
+
+	// window creation
+	Window window;		
 	// user input
 	Keyboard keyboard;	
 	// how the computer responds to the user inputs. 
-	Response response;			
+	Response response;	
 private:
 	// handling windows messages: WM_EXEMPLE. 
 	void handle_message();		

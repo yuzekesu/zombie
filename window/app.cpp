@@ -1,8 +1,13 @@
 #include "app.h"
 #include "constant.h"
+#include <cassert>
 
 void App::run() {
 	while (msg.message != WM_QUIT) {
+
+		// only get the cursor position once per frame. 
+
+		assert(GetCursorPos(&(this->cursor)));
 		if (PeekMessageW(&msg, NULL, NULL, NULL, PM_REMOVE)) {
 			DispatchMessageW(&msg);
 
