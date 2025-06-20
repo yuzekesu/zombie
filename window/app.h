@@ -3,25 +3,29 @@
 #include "response.h"
 #include "window.h"
 #include <Windows.h>
+
+/*
+the boss of the program, has access to anything. 
+*/
 class App {
 public:
-	// constructor. the "response" class needs to be initialized here
+	// constructor. the "response" class needs to be initialized here. 
 	App() : response(*this) {};	
 public:
-	// "seek message" loop
+	// "seek message" loop. 
 	void run();					
 private: 
 	// window creation
 	Window window;	
-	// storing windows messages from the queue
+	// storing windows messages from the queue. 
 	MSG msg{};		
 	// user input
 	Keyboard keyboard;	
-	// how the computer responds to the user inputs
+	// how the computer responds to the user inputs. 
 	Response response;			
 private:
-	// handling windows messages: WM_EXEMPLE
+	// handling windows messages: WM_EXEMPLE. 
 	void handle_message();		
-	// handling user inputs and giving the right responses
+	// handling user inputs and giving the right responses. 
 	void handle_user_input();	
 };

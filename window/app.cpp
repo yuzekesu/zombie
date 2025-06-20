@@ -6,7 +6,7 @@ void App::run() {
 		if (PeekMessageW(&msg, NULL, NULL, NULL, PM_REMOVE)) {
 			DispatchMessageW(&msg);
 
-			// put the logic here
+			// put the logic here. 
 
 			handle_message();
 			handle_user_input();
@@ -16,10 +16,10 @@ void App::run() {
 
  void App::handle_message()
 {
-	switch (this->msg.message) // "msg"
+	switch (this->msg.message) // "msg". 
 	{
 
-	// keyboard input
+	// keyboard input. 
 
 	case WM_KEYDOWN:
 		keyboard.press(this->msg.wParam);
@@ -28,7 +28,7 @@ void App::run() {
 		keyboard.release(this->msg.wParam);
 		break;
 
-	// mouse input
+	// mouse input. 
 
 	case WM_LBUTTONUP:
 		keyboard.press(VK_LBUTTON);
