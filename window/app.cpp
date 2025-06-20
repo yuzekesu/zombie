@@ -24,7 +24,10 @@ void App::run() {
 	switch (this->msg.message) // "msg". 
 	{
 
-	// keyboard input. 
+	/*
+	keyboard input.
+	no explicit convertion need here.
+	*/
 
 	case WM_KEYDOWN:
 		keyboard.press(this->msg.wParam);
