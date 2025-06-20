@@ -5,14 +5,23 @@
 #include <Windows.h>
 class App {
 public:
-	App() : response(*this) {};
-	void run();
-private: // initialized in the constructor
-	Window window;
-	MSG msg{};
-	Keyboard keyboard;
-	Response response;
+	// constructor. the "response" class needs to be initialized here
+	App() : response(*this) {};	
+public:
+	// "seek message" loop
+	void run();					
+private: 
+	// window creation
+	Window window;	
+	// storing windows messages from the queue
+	MSG msg{};		
+	// user input
+	Keyboard keyboard;	
+	// how the computer responds to the user inputs
+	Response response;			
 private:
-	void handle_message();
-	void handle_user_input();
+	// handling windows messages: WM_EXEMPLE
+	void handle_message();		
+	// handling user inputs and giving the right responses
+	void handle_user_input();	
 };

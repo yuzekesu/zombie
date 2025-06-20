@@ -2,36 +2,34 @@
 #include "constant.h"
 
 void App::run() {
-	auto test_1 = [](App& app, const UCHAR vKey) {
-		SetLayeredWindowAttributes(app.window.get_hWnd(), RGB(0, 0, 0), NULL, LWA_COLORKEY);
-		app.keyboard.release(vKey);
-	};
-	auto test_2 = [](App& app, const UCHAR vKey) {
-		SetLayeredWindowAttributes(app.window.get_hWnd(), RGB(0, 0, 1), NULL, LWA_COLORKEY);
-		app.keyboard.release(vKey);
-		};
-	this->response.learn(VK_TAB, test_1);
-	this->response.learn(VK_SPACE, test_2);
 	while (msg.message != WM_QUIT) {
 		if (PeekMessageW(&msg, NULL, NULL, NULL, PM_REMOVE)) {
 			DispatchMessageW(&msg);
+
+			// put the logic here
+
 			handle_message();
 			handle_user_input();
 		}
 	}
-	
 }
 
  void App::handle_message()
 {
-	switch (msg.message)
+	switch (this->msg.message) // "msg"
 	{
+
+	// keyboard input
+
 	case WM_KEYDOWN:
-		keyboard.press(msg.wParam);
+		keyboard.press(this->msg.wParam);
 		break;
 	case WM_KEYUP:
-		keyboard.release(msg.wParam);
+		keyboard.release(this->msg.wParam);
 		break;
+
+	// mouse input
+
 	case WM_LBUTTONUP:
 		keyboard.press(VK_LBUTTON);
 		break;
@@ -73,6 +71,15 @@ void App::run() {
 
  void App::handle_user_input()
  {
+
+	 /* 
+	 probably not efficient, 
+	 it checks around 50 "if" statements per frame.
+	 but if i use queue to store the inputs, 
+	 how would i know if the user has released the key or not in the next frame ??
+	 dont want to make it complicate for now.
+	 */
+
 	 // mouse + backspace + !! no longer "tab".
 	 for (int i = VK_LBUTTON; i <= VK_BACK; i++) {
 		 if (keyboard.is_pressing(i)) {
