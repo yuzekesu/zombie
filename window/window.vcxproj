@@ -140,6 +140,8 @@
     <ClCompile Include="keyboard.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="response.cpp" />
+    <ClCompile Include="response_debug.cpp" />
+    <ClCompile Include="time.cpp" />
     <ClCompile Include="window.cpp" />
     <ClCompile Include="window_procedure.cpp" />
   </ItemGroup>
@@ -148,6 +150,8 @@
     <ClInclude Include="constant.h" />
     <ClInclude Include="keyboard.h" />
     <ClInclude Include="response.h" />
+    <ClInclude Include="response_debug.h" />
+    <ClInclude Include="time.h" />
     <ClInclude Include="window.h" />
     <ClInclude Include="window_procedure.h" />
   </ItemGroup>

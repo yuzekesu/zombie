@@ -21,7 +21,8 @@ Window::Window()
 
 	wc.lpszClassName = L"zombie_window";
 	wc.hIconSm = NULL;
-	assert(RegisterClassExW(&wc));
+	ATOM registred_window_class = RegisterClassExW(&wc);
+	assert(registred_window_class);
 
 	// to get the resolution of the primary monitor. 
 
@@ -41,17 +42,19 @@ Window::Window()
 	position_edge_window.bottom = y * factor_right_bottom::num / factor_right_bottom::den;
 	int width_window = position_edge_window.right - position_edge_window.left;
 	int height_window = position_edge_window.bottom - position_edge_window.top;
-	assert(AdjustWindowRect(&position_edge_window, NULL, NULL));
-	assert(this->hWnd = CreateWindowExW(WS_EX_LAYERED, wc.lpszClassName, wc.lpszClassName, WS_POPUP, position_edge_window.left, position_edge_window.top, width_window, height_window, NULL, NULL, wc.hInstance, NULL));
+	BOOL adjusted_window_rect = AdjustWindowRect(&position_edge_window, NULL, NULL);
+	assert(adjusted_window_rect);
+	hWnd = CreateWindowExW(WS_EX_LAYERED, wc.lpszClassName, wc.lpszClassName, WS_POPUP, position_edge_window.left, position_edge_window.top, width_window, height_window, NULL, NULL, wc.hInstance, NULL);
+	assert(hWnd);
 
 	// the transparence color is "magenta". 
 
-	SetLayeredWindowAttributes(this->get_hWnd(), RGB(255,0,255), NULL, LWA_COLORKEY);
+	SetLayeredWindowAttributes(get_hWnd(), RGB(255,0,255), NULL, LWA_COLORKEY);
 	ShowWindow(hWnd, SW_SHOW);
 }
 
 HWND Window::get_hWnd()
 {
-	return this->hWnd;
+	return hWnd;
 }
 

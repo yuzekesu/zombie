@@ -1,28 +1,42 @@
 #include "app.h"
 #include "constant.h"
+#include "response_debug.h"
 #include <cassert>
+#include <thread>
+#include <sstream>
+#include <chrono>
 
 void App::run() {
+
+	// load the default response here.
+
+	load_response_debug(*this);
 	while (msg.message != WM_QUIT) {
+		time.update();
 
 		// only get the cursor position once per frame. 
 
-		assert(GetCursorPos(&(this->cursor)));
-		if (PeekMessageW(&msg, NULL, NULL, NULL, PM_REMOVE)) {
-			DispatchMessageW(&msg);
+		BOOL got_cursor_pos = GetCursorPos(&(cursor));
+		assert(got_cursor_pos);
+		PeekMessageW(&msg, NULL, NULL, NULL, PM_REMOVE);
+		DispatchMessageW(&msg);
 
-			// put the logic here. 
+		// put the logic here. 
 
-			handle_message();
-			handle_user_input();
-		}
+		handle_message();
+		handle_user_input();
+		std::this_thread::sleep_for(time.get_sleep_time(frame_rate));
 	}
 }
 
  void App::handle_message()
 {
-	switch (this->msg.message) // "msg". 
+	switch (msg.message) // "msg". 
 	{
+	case WM_KILLFOCUS:
+		keyboard.reset();
+		response.reset_ignoration();
+		break;
 
 	/*
 	keyboard input.
@@ -30,10 +44,10 @@ void App::run() {
 	*/
 
 	case WM_KEYDOWN:
-		keyboard.press(static_cast<UCHAR>(this->msg.wParam));
+		keyboard.press(static_cast<UCHAR>(msg.wParam));
 		break;
 	case WM_KEYUP:
-		keyboard.release(static_cast<UCHAR>(this->msg.wParam));
+		keyboard.release(static_cast<UCHAR>(msg.wParam));
 		break;
 
 	// mouse input. 

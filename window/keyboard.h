@@ -3,6 +3,7 @@
 #include <Windows.h>
 #include <bitset>
 
+class Response;
 /*
 Storing user inputs
 	* extrem lightweight class, only one type of stored data.
@@ -11,6 +12,9 @@ Storing user inputs
 	* dont forget to reset the keyboard when losing focus or switching responses. 
 */
 class Keyboard {
+public:
+	Keyboard() = delete;
+	Keyboard(Response& response) : response(response) {};
 public: // keyboard
 	void press(const UCHAR vKey);
 	void release(const UCHAR vKey);
@@ -18,5 +22,6 @@ public: // keyboard
 	bool is_released(const UCHAR vKey);
 	void reset();
 private:
+	Response& response;
 	std::bitset<MAX_VIRTUAL_KEY> state;
 };
