@@ -15,7 +15,7 @@ public:
 	*/
 	App() : response(*this), keyboard(response) {};	
 public:
-	// "seek message" loop. 
+	// "peek message" loop. 
 	void run();	
 public:
 
@@ -27,18 +27,18 @@ public:
 	POINT cursor{};
 public: 
 
-	// user defined datas
+	// user defined datas. 
 
-	// window creation
+	// window creation.
 	Window window;		
-	// user input
+	// user inputs from keyboard an mouse. 
 	Keyboard keyboard;	
 	// how the computer responds to the user inputs. 
 	Response response;	
 	// reading time here. 
 	Time time;
 	// frame rate per second
-	float frame_rate = 30.0;
+	float frame_rate = 30.0f;
 private:
 	/*
 	handling windows messages : WM_EXEMPLE.
