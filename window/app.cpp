@@ -30,10 +30,10 @@ void App::run() {
 	*/
 
 	case WM_KEYDOWN:
-		keyboard.press(this->msg.wParam);
+		keyboard.press(static_cast<UCHAR>(this->msg.wParam));
 		break;
 	case WM_KEYUP:
-		keyboard.release(this->msg.wParam);
+		keyboard.release(static_cast<UCHAR>(this->msg.wParam));
 		break;
 
 	// mouse input. 
