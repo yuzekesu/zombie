@@ -1,5 +1,6 @@
 #pragma once
 #include "keyboard.h"
+#include "mouse.h"
 #include "response.h"
 #include "time.h"
 #include "window.h"
@@ -18,19 +19,12 @@ public:
 	// "peek message" loop. 
 	void run();	
 public:
-
-	// win32 library datas
-
-	// storing windows messages from the queue. 
 	MSG msg{};
-	// position of the cursor, update once per frame. 
-	POINT cursor{};
 public: 
-
-	// user defined datas. 
-
 	// window creation.
 	Window window;		
+	// position of the cursor, update once per frame. 
+	Mouse mouse;
 	// user inputs from keyboard an mouse. 
 	Keyboard keyboard;	
 	// how the computer responds to the user inputs. 

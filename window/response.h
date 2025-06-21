@@ -30,6 +30,10 @@ public:
 	void reset_memory();
 	void reset_ignoration();
 private:
+	bool is_valid_offset(const UCHAR vKey) {
+		return 0 <= vKey && vKey < MAX_VIRTUAL_KEY;
+	}
+private:
 	App& app; // constructed by the constructor.
 	std::bitset<MAX_VIRTUAL_KEY> ignoration;
 	void(*responses[MAX_VIRTUAL_KEY])(App& app, const UCHAR vKey) = {nullptr};

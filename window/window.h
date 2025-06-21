@@ -14,7 +14,9 @@ public:
 	Window();
 public:
 	HWND get_hWnd();
+	const RECT& get_position();
 private: 
 	// initialized in the constructor "Window::Window()". 
 	HWND hWnd;
+	RECT position{};
 };

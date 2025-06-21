@@ -13,25 +13,21 @@ void App::run() {
 	load_response_debug(*this);
 	while (msg.message != WM_QUIT) {
 		time.update();
-
-		// only get the cursor position once per frame. 
-
-		BOOL got_cursor_pos = GetCursorPos(&(cursor));
-		assert(got_cursor_pos);
+		mouse.update_cursor_pos(window.get_position());
 		PeekMessageW(&msg, NULL, NULL, NULL, PM_REMOVE);
 		DispatchMessageW(&msg);
 
 		// put the logic here. 
 
-		handle_message();
-		handle_user_input();
+		handle_message();		// we read the user inputs here. 
+		handle_user_input();	// we respond to the user inputs here. 
 		std::this_thread::sleep_for(time.get_sleep_time(frame_rate));
 	}
 }
 
  void App::handle_message()
 {
-	switch (msg.message) // "msg". 
+	 switch (msg.message) // "msg". 
 	{
 	case WM_KILLFOCUS:
 		keyboard.reset();

@@ -35,16 +35,15 @@ Window::Window()
 	*/
 	using factor_left_top = std::ratio<1, 8>;
 	using factor_right_bottom = std::ratio_subtract<std::ratio<1>, factor_left_top>;
-	RECT position_edge_window{};
-	position_edge_window.left = x * factor_left_top::num / factor_left_top::den;
-	position_edge_window.top = y * factor_left_top::num / factor_left_top::den;
-	position_edge_window.right = x * factor_right_bottom::num / factor_right_bottom::den;
-	position_edge_window.bottom = y * factor_right_bottom::num / factor_right_bottom::den;
-	int width_window = position_edge_window.right - position_edge_window.left;
-	int height_window = position_edge_window.bottom - position_edge_window.top;
-	BOOL adjusted_window_rect = AdjustWindowRect(&position_edge_window, NULL, NULL);
+	position.left = x * factor_left_top::num / factor_left_top::den;
+	position.top = y * factor_left_top::num / factor_left_top::den;
+	position.right = x * factor_right_bottom::num / factor_right_bottom::den;
+	position.bottom = y * factor_right_bottom::num / factor_right_bottom::den;
+	int width_window = position.right - position.left;
+	int height_window = position.bottom - position.top;
+	BOOL adjusted_window_rect = AdjustWindowRect(&position, NULL, NULL);
 	assert(adjusted_window_rect);
-	hWnd = CreateWindowExW(WS_EX_LAYERED, wc.lpszClassName, wc.lpszClassName, WS_POPUP, position_edge_window.left, position_edge_window.top, width_window, height_window, NULL, NULL, wc.hInstance, NULL);
+	hWnd = CreateWindowExW(WS_EX_LAYERED, wc.lpszClassName, wc.lpszClassName, WS_POPUP, position.left, position.top, width_window, height_window, NULL, NULL, wc.hInstance, NULL);
 	assert(hWnd);
 
 	// the transparence color is "magenta". 
@@ -56,5 +55,8 @@ Window::Window()
 HWND Window::get_hWnd()
 {
 	return hWnd;
+}
+const RECT& Window::get_position() {
+	return position;
 }
 

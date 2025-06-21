@@ -139,6 +139,7 @@
     <ClCompile Include="app.cpp" />
     <ClCompile Include="keyboard.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="mouse.cpp" />
     <ClCompile Include="response.cpp" />
     <ClCompile Include="response_debug.cpp" />
     <ClCompile Include="time.cpp" />
@@ -149,6 +150,7 @@
     <ClInclude Include="app.h" />
     <ClInclude Include="constant.h" />
     <ClInclude Include="keyboard.h" />
+    <ClInclude Include="mouse.h" />
     <ClInclude Include="response.h" />
     <ClInclude Include="response_debug.h" />
     <ClInclude Include="time.h" />
