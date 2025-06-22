@@ -13,6 +13,7 @@ void load_response_debug(App& app) {
 	app.response.learn('B', set_frame_rate_60);
 	app.response.learn('N', set_frame_rate_30);
 	app.response.learn(VK_SPACE, popup_message_box);
+	app.response.learn(VK_MOUSEWHEEL, popup_message_box);
 }
 
 void response_debug::quit_the_program(App& app, const UCHAR vKey) {

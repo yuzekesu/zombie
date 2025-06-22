@@ -83,6 +83,9 @@ void App::run() {
 			keyboard.release(VK_XBUTTON2);
 		}
 		break;
+	case WM_MOUSEWHEEL:
+		mouse.update_wheel_delta(msg.wParam);
+		break;
 	default:
 		break;
 	}
@@ -90,6 +93,10 @@ void App::run() {
 
  void App::handle_user_input()
  {
+	 int mouse_wheel = mouse.get_wheel_delta();
+	 if (mouse_wheel) {
+		 response(VK_MOUSEWHEEL);
+	 }
 	 auto inputs = keyboard.get_inputs();
 	 for (auto i = inputs.begin(); i != inputs.end(); ++i) {
 		 response(*i);
