@@ -53,7 +53,8 @@ void response_debug::set_frame_rate_30(App& app, const UCHAR vKey) {
 
 void response_debug::popup_message_box(App& app, const UCHAR vKey) {
 	MessageBoxA(NULL, "RESPONSE_DEBUG", NULL, NULL);
-	app.response.ignore(vKey);
+	app.keyboard.reset();
+	app.response.reset_ignoration();
 	PostMessage(app.window.get_hWnd(), WM_KEYUP, vKey, NULL);
 }
 

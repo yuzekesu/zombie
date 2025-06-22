@@ -2,9 +2,10 @@
 #include "constant.h"
 #include "response_debug.h"
 #include <cassert>
+#include <chrono>
 #include <thread>
 #include <sstream>
-#include <chrono>
+#include <vector>
 
 void App::run() {
 
@@ -89,45 +90,8 @@ void App::run() {
 
  void App::handle_user_input()
  {
-
-	 /* 
-	 probably not efficient, 
-	 it checks around 50 "if" statements per frame.
-	 but if i use queue to store the inputs, 
-	 how would i know if the user has released the key or not in the next frame ??
-	 dont want to make it complicate for now.
-	 */
-
-	 // mouse + backspace + !! no longer "tab".
-	 for (int i = VK_LBUTTON; i <= VK_BACK; i++) {
-		 if (keyboard.is_pressing(i)) {
-			 response(i);
-		 }
-	 }
-	 // enter + shift + ctrl + !! no longer "alt".
-	 for (int i = VK_RETURN; i <= VK_CONTROL; i++) {
-		 if (keyboard.is_pressing(i)) {
-			 response(i);
-		 }
-	 }
-	 // esc.
-	 if (keyboard.is_pressing(VK_ESCAPE)) {
-		 response(VK_ESCAPE);
-	 }
-	 // spacebar.
-	 if (keyboard.is_pressing(VK_SPACE)) {
-		 response(VK_SPACE);
-	 }
-	 // arrows.
-	 for (int i = VK_LEFT; i <= VK_DOWN; i++) {
-		 if (keyboard.is_pressing(i)) {
-			 response(i);
-		 }
-	 }
-	 // numbers and alphabets.
-	 for (int i = '0'; i <= 'Z'; i++) {
-		 if (keyboard.is_pressing(i)) {
-			 response(i);
-		 }
+	 auto inputs = keyboard.get_inputs();
+	 for (auto i = inputs.begin(); i != inputs.end(); ++i) {
+		 response(*i);
 	 }
  }
