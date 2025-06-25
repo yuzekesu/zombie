@@ -13,3 +13,15 @@ void Mouse::update_cursor_pos(const RECT& window_position) {
 	cursor_pos.y = cursor_pos.y < window_position.top ? window_position.top : cursor_pos.y;
 	cursor_pos.y = window_position.bottom < cursor_pos.y ? window_position.bottom : cursor_pos.y;
 }
+
+int Mouse::get_wheel_delta() {
+	int Return = wheel_delta / 120;
+	if (0 < abs(Return)) {
+		wheel_delta %= 120;
+	}
+	return Return;
+}
+
+void Mouse::update_wheel_delta(WPARAM wParam) {
+	wheel_delta += HIWORD(wParam) * 120;
+}

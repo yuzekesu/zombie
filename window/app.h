@@ -11,28 +11,19 @@ the boss of the program, has access to anything.
 */
 class App {
 public:
-	/*
-	it is like: App -> Keyboard -> Response -> App -> ... a Input Output loop. 
-	*/
-	App() : response(*this), keyboard(response) {};	
+	App() : window(*this) {};	
 public:
 	// "peek message" loop. 
 	void run();	
 public:
+	Window& get_window();
+	Time& get_time();
+	float& get_frame_rate();
+private:
 	MSG msg{};
-public: 
-	// window creation.
 	Window window;		
-	// position of the cursor, update once per frame. 
-	Mouse mouse;
-	// user inputs from keyboard an mouse. 
-	Keyboard keyboard;	
-	// how the computer responds to the user inputs. 
-	Response response;	
-	// reading time here. 
 	Time time;
-	// frame rate per second
-	float frame_rate = 30.0f;
+	float frame_rate = 30.f;
 private:
 	/*
 	handling windows messages : WM_EXEMPLE.

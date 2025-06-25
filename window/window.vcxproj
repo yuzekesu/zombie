@@ -137,6 +137,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="app.cpp" />
+    <ClCompile Include="graphic.cpp" />
     <ClCompile Include="keyboard.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mouse.cpp" />
@@ -149,6 +150,7 @@
   <ItemGroup>
     <ClInclude Include="app.h" />
     <ClInclude Include="constant.h" />
+    <ClInclude Include="graphic.h" />
     <ClInclude Include="keyboard.h" />
     <ClInclude Include="mouse.h" />
     <ClInclude Include="response.h" />

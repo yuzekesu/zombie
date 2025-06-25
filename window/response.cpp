@@ -1,16 +1,17 @@
 #include "response.h"
 #include <cassert>
 
-void Response::operator()(UCHAR vKey) {
+void Response::learn(const UCHAR vKey, void(*how_to_response)(App& app, const UCHAR vKey)) {
+	assert(is_valid_offset(vKey));
+	responses[vKey] = how_to_response;
+}
+
+void Response::respond(UCHAR vKey)
+{
 	assert(is_valid_offset(vKey));
 	if (responses[vKey] != nullptr && !is_ignoring(vKey)) {
 		responses[vKey](app, vKey);
 	}
-}
-
-void Response::learn(const UCHAR vKey, void(*how_to_response)(App& app, const UCHAR vKey)) {
-	assert(is_valid_offset(vKey));
-	responses[vKey] = how_to_response;
 }
 
 void Response::forget(const UCHAR vKey) {

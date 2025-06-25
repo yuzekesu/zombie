@@ -1,9 +1,10 @@
+#include "app.h"
 #include "window.h"
 #include "window_procedure.h"
 #include <cassert>
 #include <ratio>
 
-Window::Window()
+Window::Window(App& app) : response(app), keyboard(response)
 {
 	WNDCLASSEXW wc{};
 	wc.cbSize = sizeof(WNDCLASSEX);
@@ -49,6 +50,7 @@ Window::Window()
 	// the transparence color is "magenta". 
 
 	SetLayeredWindowAttributes(get_hWnd(), RGB(255,0,255), NULL, LWA_COLORKEY);
+	pGraphic = std::make_unique<Graphic>(hWnd);
 	ShowWindow(hWnd, SW_SHOW);
 }
 
@@ -58,5 +60,17 @@ HWND Window::get_hWnd()
 }
 const RECT& Window::get_position() {
 	return position;
+}
+
+Mouse& Window::get_mouse() {
+	return mouse;
+}
+
+Keyboard& Window::get_keyboard() {
+	return keyboard;
+}
+
+Response& Window::get_response() {
+	return response;
 }
 

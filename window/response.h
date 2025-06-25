@@ -20,9 +20,9 @@ public:
 	Response() = delete;
 	Response(App& app) : app(app){}
 	// call the responding response to that user inputs.
-	void operator()(UCHAR vKey);
 public:
 	void learn(const UCHAR vKey, void(*how_to_response)(App& app, const UCHAR vKey));
+	void respond(UCHAR vKey);
 	void forget(const UCHAR vKey);
 	void ignore(const UCHAR vKey);
 	void unignore(const UCHAR vKey);
