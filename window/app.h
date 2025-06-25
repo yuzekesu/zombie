@@ -1,7 +1,4 @@
 #pragma once
-#include "keyboard.h"
-#include "mouse.h"
-#include "response.h"
 #include "time.h"
 #include "window.h"
 #include <Windows.h>
@@ -33,4 +30,5 @@ private:
 	handling user inputs and giving the right responses.
 	*/
 	void handle_user_input();	
+	void handle_graphic();
 };

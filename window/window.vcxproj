@@ -143,6 +143,7 @@
     <ClCompile Include="mouse.cpp" />
     <ClCompile Include="response.cpp" />
     <ClCompile Include="response_debug.cpp" />
+    <ClCompile Include="throw.cpp" />
     <ClCompile Include="time.cpp" />
     <ClCompile Include="window.cpp" />
     <ClCompile Include="window_procedure.cpp" />
@@ -155,6 +156,7 @@
     <ClInclude Include="mouse.h" />
     <ClInclude Include="response.h" />
     <ClInclude Include="response_debug.h" />
+    <ClInclude Include="throw.h" />
     <ClInclude Include="time.h" />
     <ClInclude Include="window.h" />
     <ClInclude Include="window_procedure.h" />

@@ -1,8 +1,12 @@
 #pragma once
 #include "graphic.h"
+#include "keyboard.h"
+#include "mouse.h"
+#include "response.h"
 #include <memory>
 #include <Windows.h>
 
+class App;
 /*
 windows window. 
 	* this class create the pre-defined window upon creation. 
@@ -21,6 +25,7 @@ public:
 	Mouse& get_mouse();
 	Keyboard& get_keyboard();
 	Response& get_response();
+	Graphic& get_graphic();
 private: 
 	// initialized in the constructor "Window::Window()". 
 	HWND hWnd;

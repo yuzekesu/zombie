@@ -74,3 +74,8 @@ Response& Window::get_response() {
 	return response;
 }
 
+Graphic& Window::get_graphic()
+{
+	return *pGraphic;
+}
+

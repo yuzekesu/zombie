@@ -8,8 +8,13 @@ class Graphic {
 public:
 	Graphic() = delete;
 	Graphic(HWND hWnd);
+	void present() {
+		pSwapChain->Present(1u, 0u);
+	}
+	void clearRenderTargetView(float r, float g, float b, float a = 1.f);
 private:
 	Microsoft::WRL::ComPtr<ID3D11Device> pDevice;
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> pDeviceContext;
 	Microsoft::WRL::ComPtr<IDXGISwapChain> pSwapChain;
+	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> pRenderTargetView;
 };

@@ -22,6 +22,7 @@ void App::run() {
 
 		handle_message();		// we read the user inputs here. 
 		handle_user_input();	// we respond to the user inputs here. 
+		handle_graphic();
 		std::this_thread::sleep_for(time.get_sleep_time(frame_rate));
 	}
 }
@@ -113,4 +114,9 @@ float& App::get_frame_rate() {
 	 for (auto i = inputs.begin(); i != inputs.end(); ++i) {
 		 window.get_response().respond(*i);
 	 }
+ }
+
+ void App::handle_graphic()
+ {
+	 window.get_graphic().present();
  }

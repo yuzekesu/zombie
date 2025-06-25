@@ -4,7 +4,6 @@
 #include <bitset>
 
 class App;
-
 /*
 Respond to the user inputs.
 	* this class stores the policy of how the program react to the user inputs. 
