@@ -3,6 +3,8 @@
 
 #ifndef NDEBUG
 #define THROW_IF_HRESULT(function) OutputDebugString(L"|----------BREAK----------|\n"); if (HRESULT hr = function; FAILED(hr)) {Throw::HResult::throw_if(hr, #function, __FILE__, __LINE__);}
+#else
+#define THROW_IF_HRESULT(function) function
 #endif // !NDEBUG
 
 class Throw {
