@@ -13,10 +13,12 @@ public:
 	
 	// get delta. 
 	float get_delta();
+	float get_time_since_start();
 	// for the "std::this_thread::sleep_for()". 
 	// not accurate. 
 	std::chrono::duration<float> get_sleep_time(float frame_rate);
 private:
 	std::chrono::time_point<std::chrono::steady_clock> last_update = std::chrono::steady_clock::now();
-	std::chrono::duration<float> time_since_last_update{0.0};
+	std::chrono::duration<float> time_since_last_update{ 0.f };
+	std::chrono::duration<float> time_since_start{0.f};
 };

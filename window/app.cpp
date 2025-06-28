@@ -118,5 +118,7 @@ float& App::get_frame_rate() {
 
  void App::handle_graphic()
  {
+	 window.get_graphic().clear_render_target_view(1.f,1.f,1.f);
+	 window.get_graphic().test_cube_draw(window.get_mouse().get_cursor_pos(), window.get_position(), time.get_time_since_start());
 	 window.get_graphic().present();
  }

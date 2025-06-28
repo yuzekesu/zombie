@@ -11,7 +11,8 @@ public:
 	void present() {
 		pSwapChain->Present(1u, 0u);
 	}
-	void clearRenderTargetView(float r, float g, float b, float a = 1.f);
+	void clear_render_target_view(float r, float g, float b, float a = 1.f);
+	void test_cube_draw(POINT coordinate, RECT window_position, float angel_rotation);
 private:
 	Microsoft::WRL::ComPtr<ID3D11Device> pDevice;
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> pDeviceContext;

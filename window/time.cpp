@@ -11,11 +11,17 @@ void Time::update() {/*
 	*/
 
 	time_since_last_update = std::chrono::duration_cast<std::chrono::duration<float>>(now - last_update);
+	time_since_start += time_since_last_update;
 	last_update = std::chrono::steady_clock::now();
 }
 
 float Time::get_delta() {
 	return time_since_last_update.count();
+}
+
+float Time::get_time_since_start()
+{
+	return time_since_start.count();
 }
 
 std::chrono::duration<float> Time::get_sleep_time(float frame_rate) {

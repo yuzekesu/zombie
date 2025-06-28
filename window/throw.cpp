@@ -8,7 +8,7 @@ void Throw::HResult::throw_if(HRESULT hr, const char* function, const char* file
 		_com_error error = _com_error(hr);
 		std::wstringstream str;
 		str << error.ErrorMessage() << "\n" << "\n" << "\n";
-		str << "[HRESULT]: " << "0x" << std::uppercase << std::hex << hr << "\n";
+		str << "[HRESULT]: " << "0x" << std::uppercase << std::hex << hr << "\n" << std::dec;
 		str << "[FILE]: " << file << "\n";
 		str << "[LINE]: " << line << "\n";
 		str << "[FUNCTION]: " << function << "\n";

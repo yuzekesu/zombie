@@ -25,3 +25,8 @@ int Mouse::get_wheel_delta() {
 void Mouse::update_wheel_delta(WPARAM wParam) {
 	wheel_delta += HIWORD(wParam) * 120;
 }
+
+const POINT& Mouse::get_cursor_pos()
+{
+	return cursor_pos;
+}
