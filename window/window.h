@@ -29,7 +29,7 @@ public:
 private: 
 	// initialized in the constructor "Window::Window()". 
 	HWND hWnd;
-	RECT position{};// position of the cursor, update once per frame. 
+	RECT position{};// position of the cursor, update once per frame.  
 	Mouse mouse;
 	// user inputs from keyboard an mouse. 
 	Keyboard keyboard;

@@ -16,6 +16,9 @@
     <Filter Include="Shaders">
       <UniqueIdentifier>{a8c4bdf6-6501-48b9-b7b3-39eba5408f52}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders\test_cube">
+      <UniqueIdentifier>{3348d661-791e-4d2e-9b70-a104fe7691f4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -88,19 +91,19 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="test_cube_VertexShader.hlsl">
-      <Filter>Shaders</Filter>
-    </FxCompile>
     <FxCompile Include="test_cube_PixelShader.hlsl">
-      <Filter>Shaders</Filter>
+      <Filter>Shaders\test_cube</Filter>
+    </FxCompile>
+    <FxCompile Include="test_cube_VertexShader.hlsl">
+      <Filter>Shaders\test_cube</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="test_cube_VertexShader.cso">
-      <Filter>Shaders</Filter>
-    </None>
     <None Include="test_cube_PixelShader.cso">
-      <Filter>Shaders</Filter>
+      <Filter>Shaders\test_cube</Filter>
+    </None>
+    <None Include="test_cube_VertexShader.cso">
+      <Filter>Shaders\test_cube</Filter>
     </None>
   </ItemGroup>
 </Project>

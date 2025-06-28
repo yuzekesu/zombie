@@ -25,15 +25,51 @@ Graphic::Graphic(HWND hWnd) {
 	dc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 	dc.Flags = 0u;
 	THROW_IF_HRESULT(D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, D3D11_CREATE_DEVICE_DEBUG, NULL, NULL, D3D11_SDK_VERSION, &dc, &pSwapChain, &pDevice, NULL, &pDeviceContext));
+
+	// get render target view from the swap chain. 
+
+	Microsoft::WRL::ComPtr<ID3D11Resource> pBackBuffer;
+	THROW_IF_HRESULT(pSwapChain->GetBuffer(0, __uuidof(ID3D11Resource), reinterpret_cast<void**>(pBackBuffer.ReleaseAndGetAddressOf())));
+	THROW_IF_HRESULT(pDevice->CreateRenderTargetView(pBackBuffer.Get(), NULL, &pRenderTargetView));
+
+	// make depth stencil view. 
+
+	D3D11_DEPTH_STENCIL_DESC dsd{};
+	dsd.DepthEnable = TRUE;
+	dsd.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+	dsd.DepthFunc = D3D11_COMPARISON_LESS;
+	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> pDepth_stencil_state;
+	THROW_IF_HRESULT(pDevice->CreateDepthStencilState(&dsd, &pDepth_stencil_state));
+	pDeviceContext->OMSetDepthStencilState(pDepth_stencil_state.Get(), 1u);
+
+	// depth stencil texture. 
+	RECT window_rect{};
+	assert(GetWindowRect(hWnd, &window_rect));
+	D3D11_TEXTURE2D_DESC td{};
+	td.Width = window_rect.right - window_rect.left;
+	td.Height = window_rect.bottom - window_rect.top;
+	td.MipLevels = 1u;
+	td.ArraySize = 1u;
+	td.Format = DXGI_FORMAT_D32_FLOAT;
+	td.SampleDesc.Count = 1u;
+	td.Usage = D3D11_USAGE_DEFAULT;
+	td.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+	Microsoft::WRL::ComPtr<ID3D11Texture2D> pTexture;
+	THROW_IF_HRESULT(pDevice->CreateTexture2D(&td, NULL, &pTexture));
+	D3D11_DEPTH_STENCIL_VIEW_DESC dsvd{};
+	dsvd.Format = DXGI_FORMAT_D32_FLOAT;
+	dsvd.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+	dsvd.Texture2D.MipSlice = 0u;
+	THROW_IF_HRESULT(pDevice->CreateDepthStencilView(pTexture.Get(), &dsvd, &pDepthStencilView));
+	pDeviceContext->OMSetRenderTargets(1u, pRenderTargetView.GetAddressOf(), pDepthStencilView.Get());
 	clear_render_target_view(1.f, 1.f, 1.f, 1.f);
 }
 
 void Graphic::clear_render_target_view(float r, float g, float b, float a) {
-	Microsoft::WRL::ComPtr<ID3D11Resource> pBackBuffer;
-	THROW_IF_HRESULT(pSwapChain->GetBuffer(0, __uuidof(ID3D11Resource), reinterpret_cast<void**>(pBackBuffer.ReleaseAndGetAddressOf())));
-	THROW_IF_HRESULT(pDevice->CreateRenderTargetView(pBackBuffer.Get(), NULL, &pRenderTargetView));
+	
 	FLOAT color[] = {r, g, b, a};
 	pDeviceContext->ClearRenderTargetView(pRenderTargetView.Get(), color);
+	pDeviceContext->ClearDepthStencilView(pDepthStencilView.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0u);
 }
 
 void Graphic::test_cube_draw(POINT coordinate, RECT window_position, float angel_rotation)
@@ -175,9 +211,9 @@ void Graphic::test_cube_draw(POINT coordinate, RECT window_position, float angel
 	THROW_IF_HRESULT(pDevice->CreateBuffer(&bd_constant_buffer_pixel, &sd_constant_buffer_pixel, &pConstant_buffer_pixel));
 	pDeviceContext->PSSetConstantBuffers(0u, 1u, pConstant_buffer_pixel.GetAddressOf());
 
-	// binding render target. 
+	// binding render target. DID IN THE CONSTRUCTOR WITH DEPTH STENCIL. 
 
-	pDeviceContext->OMSetRenderTargets(1u, pRenderTargetView.GetAddressOf(), NULL);
+	//pDeviceContext->OMSetRenderTargets(1u, pRenderTargetView.GetAddressOf(), NULL);
 
 	// set viewport. 
 	D3D11_VIEWPORT vp{};
