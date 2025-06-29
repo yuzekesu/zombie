@@ -362,3 +362,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/window/test_cube_PixelShader.cso
+/window/test_cube_VertexShader.cso
