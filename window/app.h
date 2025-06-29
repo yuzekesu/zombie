@@ -1,4 +1,5 @@
 #pragma once
+#include "model.h"
 #include "time.h"
 #include "window.h"
 #include <Windows.h>
@@ -21,6 +22,7 @@ private:
 	Window window;		
 	Time time;
 	float frame_rate = 30.f;
+	Model model;
 private:
 	/*
 	handling windows messages : WM_EXEMPLE.

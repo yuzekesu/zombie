@@ -140,6 +140,7 @@
     <ClCompile Include="graphic.cpp" />
     <ClCompile Include="keyboard.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="model.cpp" />
     <ClCompile Include="mouse.cpp" />
     <ClCompile Include="response.cpp" />
     <ClCompile Include="response_debug.cpp" />
@@ -153,6 +154,7 @@
     <ClInclude Include="constant.h" />
     <ClInclude Include="graphic.h" />
     <ClInclude Include="keyboard.h" />
+    <ClInclude Include="model.h" />
     <ClInclude Include="mouse.h" />
     <ClInclude Include="response.h" />
     <ClInclude Include="response_debug.h" />
