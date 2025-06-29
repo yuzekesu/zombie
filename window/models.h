@@ -5,9 +5,9 @@
 #include <unordered_map>
 #include <vector>
 
-class Model {
+class Models {
 public:
-	Model();
+	Models();
 public:
 	class Info {
 	public:
@@ -22,7 +22,7 @@ public:
 		std::vector<uint32_t> indices;
 	};
 public:
-	const std::shared_ptr<Model::Info> get_info(std::string model_name);
+	const std::shared_ptr<Models::Info> get_info(std::string model_name);
 private:
-	std::unordered_map<std::string, std::shared_ptr<Model::Info>> models;
+	std::unordered_map<std::string, std::shared_ptr<Models::Info>> models;
 };
