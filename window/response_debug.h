@@ -1,4 +1,6 @@
 #pragma once
+#include "camera.h"
+#include <DirectXMath.h>
 #include <Windows.h>
 
 class App;
@@ -15,5 +17,16 @@ namespace response_debug {
 	void set_frame_rate_60(App& app, const UCHAR vKey);
 	void set_frame_rate_30(App& app, const UCHAR vKey);
 	void popup_message_box(App& app, const UCHAR vKey);
+	void camera_move_forward(App& app, const UCHAR vKey);
+	void camera_move_backward(App& app, const UCHAR vKey);
+	void camera_move_left(App& app, const UCHAR vKey);
+	void camera_move_right(App& app, const UCHAR vKey);
+	void camera_rotate_yaw_increase(App& app, const UCHAR vKey);
+	void camera_rotate_yaw_decrease(App& app, const UCHAR vKey);
+	void camera_rotate_pitch_increase(App& app, const UCHAR vKey);
+	void camera_rotate_pitch_decrease(App& app, const UCHAR vKey);
+	void camera_move_up(App& app, const UCHAR vKey);
+	void camera_move_down(App& app, const UCHAR vKey);
+
 
 }

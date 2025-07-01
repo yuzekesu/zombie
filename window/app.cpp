@@ -118,8 +118,12 @@ float& App::get_frame_rate() {
 
  void App::handle_graphic()
  {
-	 window.get_graphic().clear_render_target_view(1.f,1.f,1.f);
-	 window.get_graphic().test_cube_draw(window.get_mouse().get_cursor_pos(), window.get_position(), time.get_time_since_start());
-	 window.get_graphic().test_cube_draw(window.get_mouse().get_cursor_pos(), window.get_position(), 0.f);
+	 window.get_graphic().clear_view(1.f,1.f,1.f);
+	 /*window.get_graphic().test_cube_draw(window.get_mouse().get_cursor_pos(), window.get_position(), time.get_time_since_start());
+	 window.get_graphic().test_cube_draw(window.get_mouse().get_cursor_pos(), window.get_position(), 0.f);*/
+	 get_unit().add_unit_data("cube");
+	 std::shared_ptr<Unit::Data> cube = get_unit().get_unit_data(0);
+	 window.get_graphic().draw_single_unit(window.get_hWnd(), cube, camera);
+	 get_unit().clear_all_unit_data();
 	 window.get_graphic().present();
  }

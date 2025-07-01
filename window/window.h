@@ -4,6 +4,7 @@
 #include "mouse.h"
 #include "response.h"
 #include <memory>
+#include "unit.h"
 #include <Windows.h>
 
 class App;

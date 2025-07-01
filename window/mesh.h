@@ -5,9 +5,9 @@
 #include <unordered_map>
 #include <vector>
 
-class Model {
+class Mesh {
 public:
-	Model();
+	Mesh();
 public:
 	class Data {
 	public:
@@ -22,7 +22,7 @@ public:
 		std::vector<uint32_t> indices;
 	};
 public:
-	const std::shared_ptr<Model::Data> get_data(std::string model_name);
+	const std::shared_ptr<Mesh::Data> get_data(std::string mesh_name);
 private:
-	std::unordered_map<std::string, std::shared_ptr<Model::Data>> model;
+	std::unordered_map<std::string, std::shared_ptr<Mesh::Data>> mesh;
 };

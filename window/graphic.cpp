@@ -1,9 +1,11 @@
 #pragma comment (lib, "D3Dcompiler.lib")
-#include "graphic.h"
-#include "throw.h"
 #include <array>
+#include "camera.h"
 #include <d3dcompiler.h>
 #include <DirectXMath.h>
+#include "graphic.h"
+#include "throw.h"
+#include <memory>
 #include <Windows.h>
 #include <wrl.h>
 
@@ -62,10 +64,10 @@ Graphic::Graphic(HWND hWnd) {
 	dsvd.Texture2D.MipSlice = 0u;
 	THROW_IF_HRESULT(pDevice->CreateDepthStencilView(pTexture.Get(), &dsvd, &pDepthStencilView));
 	pDeviceContext->OMSetRenderTargets(1u, pRenderTargetView.GetAddressOf(), pDepthStencilView.Get());
-	clear_render_target_view(1.f, 1.f, 1.f, 1.f);
+	clear_view(1.f, 1.f, 1.f, 1.f);
 }
 
-void Graphic::clear_render_target_view(float r, float g, float b, float a) {
+void Graphic::clear_view(float r, float g, float b, float a) {
 	
 	FLOAT color[] = {r, g, b, a};
 	pDeviceContext->ClearRenderTargetView(pRenderTargetView.Get(), color);
@@ -228,4 +230,128 @@ void Graphic::test_cube_draw(POINT coordinate, RECT window_position, float angel
 	// draw. 
 
 	pDeviceContext->DrawIndexed(static_cast<UINT>(std::size(cube_indices)), 0u, 0u);
+}
+
+void Graphic::draw_single_unit(HWND hWnd, std::shared_ptr<Unit::Data> unit_data, Camera& camera)
+{
+	std::shared_ptr<Mesh::Data> mesh_data = unit_data->get_mesh_data();
+
+	// vertex buffer
+
+	D3D11_BUFFER_DESC bd_vertex{};
+	bd_vertex.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	bd_vertex.Usage = D3D11_USAGE_DEFAULT;
+	bd_vertex.ByteWidth = static_cast<UINT>(sizeof(DirectX::XMFLOAT3) * mesh_data->get_vertices_size());
+	bd_vertex.CPUAccessFlags = 0u;
+	bd_vertex.MiscFlags = 0u;
+	bd_vertex.StructureByteStride = static_cast <UINT>(sizeof(DirectX::XMFLOAT3));
+	D3D11_SUBRESOURCE_DATA sd_vertex{};
+	sd_vertex.pSysMem = mesh_data->get_vertices_raw_ptr();
+	Microsoft::WRL::ComPtr<ID3D11Buffer> pVertex_buffer;
+	THROW_IF_HRESULT(pDevice->CreateBuffer(&bd_vertex, &sd_vertex, &pVertex_buffer));
+	UINT stride = static_cast<UINT>(sizeof(DirectX::XMFLOAT3));
+	UINT offset = 0u;
+	pDeviceContext->IASetVertexBuffers(0u, 1u, pVertex_buffer.GetAddressOf(), &stride, &offset);
+
+	// index buffer
+
+	D3D11_BUFFER_DESC bd_index{};
+	bd_index.BindFlags = D3D11_BIND_INDEX_BUFFER;
+	bd_index.Usage = D3D11_USAGE_DEFAULT;
+	bd_index.ByteWidth = static_cast<UINT>(sizeof(uint32_t) * mesh_data->get_indices_size());
+	bd_index.CPUAccessFlags = 0u;
+	bd_index.MiscFlags = 0u;
+	bd_index.StructureByteStride = sizeof(uint32_t);
+	D3D11_SUBRESOURCE_DATA sd_index{};
+	sd_index.pSysMem = mesh_data->get_indices_raw_ptr();
+	Microsoft::WRL::ComPtr<ID3D11Buffer> pIndex_buffer;
+	THROW_IF_HRESULT(pDevice->CreateBuffer(&bd_index, &sd_index, &pIndex_buffer));
+	pDeviceContext->IASetIndexBuffer(pIndex_buffer.Get(), DXGI_FORMAT_R32_UINT, 0u);
+
+	// vertex shader. 
+
+	Microsoft::WRL::ComPtr<ID3DBlob> pBlob_vertex_shader;
+	THROW_IF_HRESULT(D3DReadFileToBlob(L"debug_VertexShader.cso", &pBlob_vertex_shader));
+	Microsoft::WRL::ComPtr<ID3D11VertexShader> pVertex_shader;
+	THROW_IF_HRESULT(pDevice->CreateVertexShader(pBlob_vertex_shader->GetBufferPointer(), pBlob_vertex_shader->GetBufferSize(), NULL, &pVertex_shader));
+	pDeviceContext->VSSetShader(pVertex_shader.Get(), NULL, NULL);
+
+	// input layout.
+
+	D3D11_INPUT_ELEMENT_DESC ied{};
+	ied.AlignedByteOffset = 0u;
+	ied.Format = DXGI_FORMAT_R32G32B32_FLOAT;
+	ied.InputSlot = 0u;
+	ied.InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+	ied.InstanceDataStepRate = 0u;
+	ied.SemanticIndex = 0;
+	ied.SemanticName = "POSITION";
+	Microsoft::WRL::ComPtr<ID3D11InputLayout> pInput_layout;
+	THROW_IF_HRESULT(pDevice->CreateInputLayout(&ied, 1u, pBlob_vertex_shader->GetBufferPointer(), pBlob_vertex_shader->GetBufferSize(), &pInput_layout));
+	pDeviceContext->IASetInputLayout(pInput_layout.Get());
+	
+	// topologi
+
+	pDeviceContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	// pixel shader.
+
+	Microsoft::WRL::ComPtr<ID3DBlob> pBlob_pixel_shader;
+	THROW_IF_HRESULT(D3DReadFileToBlob(L"debug_PixelShader.cso", &pBlob_pixel_shader));
+	Microsoft::WRL::ComPtr<ID3D11PixelShader> pPixel_shader;
+	THROW_IF_HRESULT(pDevice->CreatePixelShader(pBlob_pixel_shader->GetBufferPointer(), pBlob_pixel_shader->GetBufferSize(), NULL, &pPixel_shader));
+	pDeviceContext->PSSetShader(pPixel_shader.Get(), NULL, NULL);
+
+	// set viewport. 
+	D3D11_VIEWPORT vp{};
+	RECT window_position{};
+	GetWindowRect(hWnd, &window_position);
+	vp.Width = static_cast<FLOAT>(window_position.right - window_position.left);
+	vp.Height = static_cast<FLOAT>(window_position.bottom - window_position.top);
+	vp.TopLeftX = 0;
+	vp.TopLeftY = 0;
+	vp.MinDepth = 0;
+	vp.MaxDepth = 1;
+	pDeviceContext->RSSetViewports(1u, &vp);
+
+	// constant buffer for the vertex shader. 
+
+	struct Constant_Buffer_Vertex { DirectX::XMMATRIX transform; };
+	float factor_x_to_y = static_cast<float>(window_position.right - window_position.left) / static_cast<float>(window_position.bottom - window_position.top);
+	float x_delta = unit_data->get_position().m128_f32[0] - camera.get_position().m128_f32[0];
+	float y_delta = unit_data->get_position().m128_f32[1] - camera.get_position().m128_f32[1];
+	float z_delta = unit_data->get_position().m128_f32[2] - camera.get_position().m128_f32[2];
+	const Constant_Buffer_Vertex cube_transform_matrix = {
+		DirectX::XMMatrixTranspose(
+			DirectX::XMMatrixRotationRollPitchYawFromVector(unit_data->get_facing()) *
+			/*DirectX::XMMatrixRotationX(unit_data->get_facing().m128_f32[0]) *
+			DirectX::XMMatrixRotationY(unit_data->get_facing().m128_f32[1]) *
+			DirectX::XMMatrixRotationZ(unit_data->get_facing().m128_f32[2]) **/
+			
+			DirectX::XMMatrixTranslation(x_delta, y_delta, z_delta) * 
+			//DirectX::XMMatrixTranslation(unit_data->get_position().m128_f32[0], unit_data->get_position().m128_f32[1], unit_data->get_position().m128_f32[2]) * 
+			DirectX::XMMatrixInverse(nullptr, DirectX::XMMatrixRotationRollPitchYawFromVector(camera.get_facing())) *
+			/*DirectX::XMMatrixRotationRollPitchYawFromVector(camera.get_facing()) **/
+			/*DirectX::XMMatrixRotationX(camera.get_facing().m128_f32[0]) *
+			DirectX::XMMatrixRotationY(camera.get_facing().m128_f32[1]) *
+			DirectX::XMMatrixRotationZ(camera.get_facing().m128_f32[2]) * */
+			DirectX::XMMatrixPerspectiveFovLH(1.f, factor_x_to_y, 0.5f, 10.f)
+		)
+	};
+	Microsoft::WRL::ComPtr<ID3D11Buffer> pConstant_buffer_vertex;
+	D3D11_BUFFER_DESC bd_constant_buffer_vertex{};
+	bd_constant_buffer_vertex.ByteWidth = sizeof(cube_transform_matrix);
+	bd_constant_buffer_vertex.Usage = D3D11_USAGE_DEFAULT;
+	bd_constant_buffer_vertex.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	bd_constant_buffer_vertex.CPUAccessFlags = NULL;
+	bd_constant_buffer_vertex.MiscFlags = NULL;
+	bd_constant_buffer_vertex.StructureByteStride = NULL; // not array of transform matrices. 
+	D3D11_SUBRESOURCE_DATA sd_constant_buffer_vertex{};
+	sd_constant_buffer_vertex.pSysMem = &cube_transform_matrix;
+	THROW_IF_HRESULT(pDevice->CreateBuffer(&bd_constant_buffer_vertex, &sd_constant_buffer_vertex, &pConstant_buffer_vertex));
+	pDeviceContext->VSSetConstantBuffers(0u, 1u, pConstant_buffer_vertex.GetAddressOf());
+
+	// draw. 
+
+	pDeviceContext->DrawIndexed(static_cast<UINT>(mesh_data->get_indices_size()), 0u, 0u);
 }

@@ -1,4 +1,5 @@
 #pragma once
+#include "camera.h"
 #include "time.h"
 #include "window.h"
 #include <Windows.h>
@@ -16,11 +17,19 @@ public:
 	Window& get_window();
 	Time& get_time();
 	float& get_frame_rate();
+	Unit& get_unit() {
+		return unit;
+	}
+	Camera& get_camera() {
+		return camera;
+	}
 private:
 	MSG msg{};
 	Window window;		
 	Time time;
 	float frame_rate = 30.f;
+	Unit unit;
+	Camera camera;
 private:
 	/*
 	handling windows messages : WM_EXEMPLE.

@@ -57,7 +57,7 @@
     <ClCompile Include="unit.cpp">
       <Filter>Source Files\3d</Filter>
     </ClCompile>
-    <ClCompile Include="model.cpp">
+    <ClCompile Include="mesh.cpp">
       <Filter>Source Files\3d</Filter>
     </ClCompile>
     <ClCompile Include="app.cpp">
@@ -101,7 +101,7 @@
     <ClInclude Include="unit.h">
       <Filter>Header Files\3d</Filter>
     </ClInclude>
-    <ClInclude Include="model.h">
+    <ClInclude Include="mesh.h">
       <Filter>Header Files\3d</Filter>
     </ClInclude>
     <ClInclude Include="app.h">
@@ -132,6 +132,12 @@
     </FxCompile>
     <FxCompile Include="test_cube_VertexShader.hlsl">
       <Filter>Shaders\test_cube</Filter>
+    </FxCompile>
+    <FxCompile Include="debug_VertexShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="debug_PixelShader.hlsl">
+      <Filter>Shaders</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
