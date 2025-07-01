@@ -1,8 +1,8 @@
-#include "models.h"
+#include "model.h"
 #include <cassert>
 #include <Windows.h>
 
-Models::Models()
+Model::Model()
 {
 	const std::vector <DirectX::XMFLOAT3> cube_vertices = {
 		{-1.f, -1.f, -1.f}, // 0
@@ -22,10 +22,10 @@ Models::Models()
 		7,6,3,   7,3,5, // back
 		7,2,6,   7,4,2  // top
 	};
-	auto cube_info = std::make_shared<Models::Info>(cube_vertices, cube_indices);
-	models.emplace("cube", std::move(cube_info));
-	auto found_iterator_cube = models.find("cube");
-	assert(found_iterator_cube != models.end());
+	auto cube_data = std::make_shared<Model::Data>(cube_vertices, cube_indices);
+	model.emplace("cube", std::move(cube_data));
+	auto found_iterator_cube = model.find("cube");
+	assert(found_iterator_cube != model.end());
 
 	// debug
 
@@ -39,31 +39,31 @@ Models::Models()
 	MessageBox(NULL, L"pause", NULL, NULL);*/
 }
 
-const std::shared_ptr<Models::Info> Models::get_info(std::string model_name)
+const std::shared_ptr<Model::Data> Model::get_data(std::string model_name)
 {
-	auto found_iterator = models.find(model_name);
-	assert(found_iterator != models.end());
+	auto found_iterator = model.find(model_name);
+	assert(found_iterator != model.end());
 	return found_iterator->second;
 }
 
-Models::Info::Info(std::vector<DirectX::XMFLOAT3> a, std::vector<uint32_t> b) {
+Model::Data::Data(std::vector<DirectX::XMFLOAT3> a, std::vector<uint32_t> b) {
 	vertices = std::move(a);
 	indices = std::move(b);
 }
 
-const DirectX::XMFLOAT3* Models::Info::get_vertices_raw_ptr() {
+const DirectX::XMFLOAT3* Model::Data::get_vertices_raw_ptr() {
 	return vertices.begin()._Ptr;
 }
 
-const uint32_t* Models::Info::get_indices_raw_ptr() {
+const uint32_t* Model::Data::get_indices_raw_ptr() {
 	return indices.begin()._Ptr;
 }
 
-const size_t Models::Info::get_vertices_size() {
+const size_t Model::Data::get_vertices_size() {
 	return vertices.size();
 }
 
-const size_t Models::Info::get_indices_size() {
+const size_t Model::Data::get_indices_size() {
 	return indices.size();
 }
 

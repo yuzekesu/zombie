@@ -1,28 +1,31 @@
 #pragma once
 #include <DirectXMath.h>
 #include <memory>
-#include "models.h"
+#include "model.h"
 #include <string>
 #include <vector>
 
-class Units {
+class Unit {
 public:
 	void add_unit(std::string name);
 public:
-	class Info {
+	class Data {
 	public:
-		Units::Info() = delete;
-		Units::Info(Models& models, std::string name);
+		Unit::Data() = delete;
+		Unit::Data(Model& model, std::string name);
+		const DirectX::XMVECTOR& get_position();
+		const DirectX::XMVECTOR& get_facing();
+		const DirectX::XMVECTOR& get_translation();
 		virtual void move(DirectX::XMVECTOR angel, float time_delta);
 	private:
 		std::string name = "cube";
-		std::shared_ptr<Models::Info> model;
+		std::shared_ptr<Model::Data> model_data;
 		float size = 1.f;
 		DirectX::XMVECTOR position{ 0.f, 0.f, 0.f, 1.f };
 		DirectX::XMVECTOR facing{ 0.f, 0.f, 0.f, 1.f };
 		DirectX::XMVECTOR translation{ 0.f, 0.f, 0.f, 1.f };
 	};
 private:
-	Models models;
-	std::vector<std::shared_ptr<Units::Info>> units;
+	Model model;
+	std::vector<std::shared_ptr<Unit::Data>> pack;
 };

@@ -25,29 +25,20 @@
     <Filter Include="Source Files\Window">
       <UniqueIdentifier>{764e4b49-b434-4d7c-b6b2-502346dca479}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\3d">
+      <UniqueIdentifier>{d3154996-54b1-444c-8e03-67e5f343df83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\3d">
+      <UniqueIdentifier>{a7a854f8-34ff-4c37-8e38-e394f694b70b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\other">
+      <UniqueIdentifier>{2811691d-86e1-4d5c-923f-57f9e3a3a02a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\other">
+      <UniqueIdentifier>{6b4e3a89-2e20-416e-865c-60a705b9ecd8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="app.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="response.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="time.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="response_debug.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="throw.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="models.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="graphic.cpp">
       <Filter>Source Files\Window</Filter>
     </ClCompile>
@@ -63,32 +54,35 @@
     <ClCompile Include="window_procedure.cpp">
       <Filter>Source Files\Window</Filter>
     </ClCompile>
-    <ClCompile Include="units.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="unit.cpp">
+      <Filter>Source Files\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="model.cpp">
+      <Filter>Source Files\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="app.cpp">
+      <Filter>Source Files\other</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files\other</Filter>
+    </ClCompile>
+    <ClCompile Include="response.cpp">
+      <Filter>Source Files\other</Filter>
+    </ClCompile>
+    <ClCompile Include="response_debug.cpp">
+      <Filter>Source Files\other</Filter>
+    </ClCompile>
+    <ClCompile Include="throw.cpp">
+      <Filter>Source Files\other</Filter>
+    </ClCompile>
+    <ClCompile Include="time.cpp">
+      <Filter>Source Files\other</Filter>
+    </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>Source Files\3d</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="app.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="response.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="constant.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="time.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="response_debug.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="throw.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="models.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="window.h">
       <Filter>Header Files\Window</Filter>
     </ClInclude>
@@ -104,8 +98,32 @@
     <ClInclude Include="graphic.h">
       <Filter>Header Files\Window</Filter>
     </ClInclude>
-    <ClInclude Include="units.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="unit.h">
+      <Filter>Header Files\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="model.h">
+      <Filter>Header Files\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="app.h">
+      <Filter>Header Files\other</Filter>
+    </ClInclude>
+    <ClInclude Include="constant.h">
+      <Filter>Header Files\other</Filter>
+    </ClInclude>
+    <ClInclude Include="response.h">
+      <Filter>Header Files\other</Filter>
+    </ClInclude>
+    <ClInclude Include="response_debug.h">
+      <Filter>Header Files\other</Filter>
+    </ClInclude>
+    <ClInclude Include="throw.h">
+      <Filter>Header Files\other</Filter>
+    </ClInclude>
+    <ClInclude Include="time.h">
+      <Filter>Header Files\other</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>Header Files\3d</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
